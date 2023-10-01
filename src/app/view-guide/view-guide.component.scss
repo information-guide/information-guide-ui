@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+}
+
+.side-bar {
+    flex-basis: 300px;
+}
+
+.info-dashboard {
+    padding: 10px;
+    height: calc(100vh - 100px);
+    overflow: auto;
+    flex: 1;
+}

@@ -1,0 +1,34 @@
+<div class="add-content-container">
+  <h2>{{edit ? "Edit" : "Add"}} Information</h2>
+  <app-error-banner></app-error-banner>
+  <div>
+    <mat-form-field class="i-input">
+      <input type="text"
+             placeholder="Topic"
+             aria-label="String"
+             matInput
+             [formControl]="selectedTopic"
+             #autoCompleteInput="matAutocompleteTrigger"
+             [matAutocomplete]="matAuto">
+      <mat-autocomplete [displayWith]="getTopicName" #matAuto="matAutocomplete" requireSelection (optionSelected)="onSelect($event.option)">
+        <mat-option *ngFor="let option of options" [value]="option">
+          {{option.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field class="input-width i-input">
+      <input matInput [(ngModel)]='question' placeholder="Question">
+    </mat-form-field>
+  </div>
+  <ng-template #viewContainerRef></ng-template>
+  <section>
+    <button mat-button color="primary" class="add-text" (click)="addText()">Add Text</button>
+    <!-- <button mat-flat-button color="accent" class="add-code" (click)="addCode()">Add Code</button>
+      <button mat-flat-button color="primary" ng-non-bindable (click)="addImage()">Add Image</button> -->
+  </section>
+  <section>
+    <button mat-flat-button color="primary" class="save" (click)="save()">SAVE</button>
+  </section>
+</div>

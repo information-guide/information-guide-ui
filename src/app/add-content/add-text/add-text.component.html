@@ -1,0 +1,14 @@
+<div class="add-text-container">
+    <mat-form-field class="input-width">
+        <mat-button-toggle-group appearance="legacy" [value]="selectedFormat" name="fontStyle" aria-label="Font Style" (change)="formatChange($event)">
+            <mat-button-toggle value="text">Text</mat-button-toggle>
+            <mat-button-toggle value="code">Code</mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <textarea rows="10" matInput [(ngModel)]="text" (keydown)="handleKeydown($event)"></textarea>
+    </mat-form-field>
+
+    <button (click)="deleteText()" class="delete" mat-fab color="warn">
+        <mat-icon>delete</mat-icon>
+    </button>
+</div>

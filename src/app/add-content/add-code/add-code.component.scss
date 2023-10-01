@@ -1,0 +1,14 @@
+.code-editor {
+  min-width: 150px;
+  max-width: 500px;
+}
+
+
+.code-editor {
+    ::ng-deep {
+        .ngs-code-editor {
+            min-width: 150px;
+            max-width: 500px; 
+        }
+    }
+}

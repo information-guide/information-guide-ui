@@ -1,0 +1,16 @@
+<input 
+    type="file"
+    id="file"
+    (change)="handleFileInput($event)"
+    multiple
+    accept="image/png, image/gif, image/jpeg">
+
+    <ng-container *ngFor="let image of imageSrc, index as i">
+        <h6>image</h6>
+        <img *ngIf='image' class='preview' [src]="image"/>
+
+        <button (click)="deleteImage(i)">Delete</button>
+
+    </ng-container>
+
+<button (click)="deleteImages()">Delete Images</button>

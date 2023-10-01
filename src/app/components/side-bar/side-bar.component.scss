@@ -1,0 +1,19 @@
+div {
+    background-color: #000;
+    height: 100%;
+}
+
+.topic {
+    padding: 8px 12px;
+    color: white;
+    cursor: pointer;
+}
+
+.topic:hover {
+    background-color: rgba(60, 60, 60, 0.9);
+    cursor: pointer;
+}
+
+.mat-mdc-list-item {
+    padding: 0 !important;
+}

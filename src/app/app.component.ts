@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HighlightLoader } from 'ngx-highlightjs';
+import { ActionServiceService } from './services/action-service.service';
 
 @Component({
   selector: 'app-root',
@@ -7,12 +8,11 @@ import { HighlightLoader } from 'ngx-highlightjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'interview-guide-ui';
+  showSpinner = false;
 
-  constructor(private hljsLoader: HighlightLoader) {}
+  constructor(private actionService: ActionServiceService) { }
 
   ngOnInit(): void {
-    // const themeAndroidStudio: string = '/node_modules/highlight.js/styles/androidstudio.css';
-    // this.hljsLoader.setTheme(themeAndroidStudio);
+    this.actionService.spinnerEvent.subscribe(showSpinner => this.showSpinner = showSpinner);
   }
 }

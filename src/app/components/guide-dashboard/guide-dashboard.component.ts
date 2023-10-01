@@ -10,53 +10,86 @@ import { InformationServiceService } from 'src/app/services/information-service.
   styleUrls: ['./guide-dashboard.component.scss']
 })
 export class GuideDashboardComponent implements OnInit {
-  topic: string = '';
+  topic: any;
   informations: any[] = [];
   message: string = '';
+  infoMsg: string = '';
+  searchText: string = '';
 
-  constructor(private informationService: InformationServiceService, 
+  constructor(private informationService: InformationServiceService,
     private actionService: ActionServiceService,
     private editService: EditServiceService,
-    private router: Router) {}
+    private router: Router) { }
 
   ngOnInit(): void {
     this.message = 'Please select a topic!';
     this.actionService.topicChangeEvent.subscribe(topicId => {
+      this.actionService.showSpinner(true);
       this.loadInformation(topicId);
     });
   }
 
   loadInformation(topic: number) {
-    this.reset();
-
+    this.actionService.showSpinner(true);
     this.informationService.getAllTopicInformation(topic).subscribe(response => {
-      if(response && response.informations.length) {
-        this.topic = response.topicName;
-        this.informations = response.informations.map((r: any) => {
-          r.answer = JSON.parse(r.answer);
-          return r;
-        });
-      } else {
-        this.message = "No content to display!"
-      }
+      this.handleInformationSuccess(response);
     });
+  }
+
+  handleInformationSuccess(response: any) {
+    this.reset();
+    this.actionService.showSpinner(false);
+    if (response && response.informations.length) {
+      this.topic = response.topic;
+      this.informations = response.informations.map((r: any) => {
+        r.answer = JSON.parse(r.answer);
+        return r;
+      });
+    } else {
+      this.showNoContentMsg();
+    }
   }
 
   reset() {
-    this.topic = '';
     this.informations = [];
     this.message = '';
+    this.infoMsg = '';
   }
 
   deleteInformation(id: number, index: number) {
-    this.informationService.deleteInformationById(id).subscribe(() => {
-      alert('deleted');
-      this.informations.splice(index, 1);
-    });
+    this.actionService.showSpinner(true);
+    let text = "Do you want to delete?";
+    if (confirm(text) == true) {
+      this.informationService.deleteInformationById(id).subscribe(() => {
+        this.actionService.showSpinner(false);
+        this.informations.splice(index, 1);
+        if (!this.informations.length) {
+          this.showNoContentMsg();
+        }
+      });
+    } else {
+      this.actionService.showSpinner(false);
+    }
   }
 
-  search() {
-    console.log('enter');
+  showNoContentMsg() {
+    this.infoMsg = "No content to display!"
+    if (this.searchText) {
+      this.infoMsg = "Search result not found!"
+    }
+  }
+
+  search(event: any) {
+    const searchText = event.target.value?.trim();
+    this.searchText = searchText;
+    this.actionService.showSpinner(true);
+    if (searchText) {
+      this.informationService.searchInformation(this.topic.code, searchText).subscribe(response => {
+        this.handleInformationSuccess(response);
+      });
+    } else {
+      this.loadInformation(this.topic.code);
+    }
   }
 
   editInformation(information: any) {
@@ -64,6 +97,6 @@ export class GuideDashboardComponent implements OnInit {
     this.editService.answer = information.answer;
     this.editService.informationId = information.id;
     this.editService.selectedTopicId = information.topicId;
-    this.router.navigate(["/dashboard/add-information"], { queryParams: { edit: true }});
+    this.router.navigate(["/dashboard/add-information"], { queryParams: { edit: true } });
   }
 }

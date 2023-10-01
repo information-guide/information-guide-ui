@@ -23,6 +23,7 @@ import {
   HIGHLIGHT_OPTIONS,
 } from 'ngx-highlightjs';
 import { MainDashboardComponent } from './main-dashboard/main-dashboard.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { MainDashboardComponent } from './main-dashboard/main-dashboard.componen
     AddInformationComponent,
     SideBarComponent,
     GuideDashboardComponent,
-    MainDashboardComponent
+    MainDashboardComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

@@ -8,5 +8,6 @@ export class EditServiceService {
   selectedTopicId: number | null = null;
   question: string = '';
   answer: any = [];
+
   constructor() { }
 }

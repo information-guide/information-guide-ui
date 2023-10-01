@@ -40,4 +40,8 @@ export class InformationServiceService {
   updateInformation(payload: any) {
     return this.http.put(`${this.apiUrl}/information`, payload);
   }
+
+  searchInformation(topicId: number, searchText: string) {
+    return this.http.get(`${this.apiUrl}/all-information/${topicId}?search=${searchText}`);
+  }
 }

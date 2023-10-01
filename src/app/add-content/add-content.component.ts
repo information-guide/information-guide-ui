@@ -23,21 +23,21 @@ export class AddContentComponent implements OnInit {
   addTextComponent = AddTextComponent;
   addCodeComponent = AddCodeComponent;
   addImageComponent = AddImageComponent;
-  @ViewChild('autoCompleteInput', { static: false, read: MatAutocompleteTrigger }) 
+  @ViewChild('autoCompleteInput', { static: false, read: MatAutocompleteTrigger })
   trigger: MatAutocompleteTrigger | any;
   selectedTopic = new FormControl();
-  
+
   child_unique_key: number = 0;
   componentsReferences = Array<ComponentRef<any>>();
 
   @ViewChild("viewContainerRef", { read: ViewContainerRef }) vcr!: ViewContainerRef;
   ref: ComponentRef<any> | null = null;
 
-  constructor(private actionService: ActionServiceService, 
-      private informationService: InformationServiceService,
-      private editService: EditServiceService,
-      private router: Router,
-      private activatedRoute: ActivatedRoute) {}
+  constructor(private actionService: ActionServiceService,
+    private informationService: InformationServiceService,
+    private editService: EditServiceService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     const isEdit = this.activatedRoute.snapshot.queryParamMap.get('edit');
@@ -47,7 +47,7 @@ export class AddContentComponent implements OnInit {
       this.removeChild(key);
     });
     this.getTopics();
-    if(this.edit) {
+    if (this.edit) {
       this.initEditInformation();
     }
   }
@@ -56,7 +56,7 @@ export class AddContentComponent implements OnInit {
     this.informationService.getAllTopics().subscribe(topics => {
       this.options = topics;
 
-      if(this.edit) {
+      if (this.edit) {
         this.selectedTopic.setValue(this.options.find(option => option.code = this.editService.selectedTopicId));
       }
     });
@@ -99,7 +99,7 @@ export class AddContentComponent implements OnInit {
   }
 
   addImage() {
-        this.addChild(this.addImageComponent);
+    this.addChild(this.addImageComponent);
   }
 
   save() {
@@ -107,6 +107,7 @@ export class AddContentComponent implements OnInit {
 
     const response = (response: any) => {
       this.router.navigate(['/dashboard/view-guide']);
+      this.resetEditInformation();
     };
 
     const error = (error: any) => {
@@ -114,16 +115,16 @@ export class AddContentComponent implements OnInit {
     };
 
     if (!this.errors.length) {
-      const answer = this.componentsReferences.map((c:any) => ({
+      const answer = this.componentsReferences.map((c: any) => ({
         type: c.instance.selectedFormat,
         value: c.instance.text
       }));
       if (!this.edit) {
         this.informationService.saveInformation(this.selectedTopic?.value?.code, this.question, JSON.stringify(answer))
           .subscribe({
-           next: response.bind(this),
-          error: error.bind(this)
-        });
+            next: response.bind(this),
+            error: error.bind(this)
+          });
       } else {
         this.informationService.updateInformation({
           id: this.informationId,
@@ -140,10 +141,10 @@ export class AddContentComponent implements OnInit {
 
   validateData() {
     this.errors = [];
-    if(!this.selectedTopic?.value) {
+    if (!this.selectedTopic?.value) {
       this.errors.push('Please add topic');
     }
-    if(!this.question.trim()) {
+    if (!this.question.trim()) {
       this.errors.push('Please add question');
     }
     this.actionService.errors.next(this.errors);
@@ -152,7 +153,7 @@ export class AddContentComponent implements OnInit {
   ngAfterViewInit() {
     this.trigger.panelClosingActions
       .subscribe((e: any) => {
-        if(!e) {
+        if (!e) {
           this.selectedTopic.setValue(null);
         }
       });
@@ -170,22 +171,11 @@ export class AddContentComponent implements OnInit {
     this.question = this.editService.question;
     this.informationId = this.editService.informationId;
     this.editService.answer.forEach((answer: any) => {
-      this.addTextEdit(this.addTextComponent, answer.type, answer.value); 
+      this.addTextEdit(this.addTextComponent, answer.type, answer.value);
     });
   }
 
   addTextEdit(component: any, selectedFormat: any, text: any) {
-    // var self = this;
-    // setTimeout(function(_s: any, _t: any) {
-    //   self.ref = self.vcr.createComponent(component);
-    //   let childComponent = self.ref.instance;
-    //   childComponent.unique_key = ++self.child_unique_key;
-    //   childComponent.parentRef = self;
-    //   childComponent.text = _t;
-    //   childComponent.selectedFormat = _s;
-    //   self.componentsReferences.push(self.ref);
-    // }, 500, selectedFormat, text);
-
     setTimeout(() => {
       this.ref = this.vcr.createComponent(component);
       let childComponent = this.ref.instance;

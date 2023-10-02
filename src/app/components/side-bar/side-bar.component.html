@@ -1,7 +1,9 @@
 <div>
-    <mat-list>
-        <mat-list-item *ngFor="let topic of topics">
-          <div class="topic" (click)="selectionChange(topic)">{{topic.name}}</div>
-        </mat-list-item>
-    </mat-list>
+  <mat-list>
+    <mat-list-item *ngFor="let topic of topics">
+      <div class="topic" [ngClass]="{'selected': topic.isSelected}" (click)="selectionChange(topic)">
+        {{topic.name}}
+      </div>
+    </mat-list-item>
+  </mat-list>
 </div>

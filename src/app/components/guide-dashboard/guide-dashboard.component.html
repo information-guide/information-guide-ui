@@ -22,7 +22,7 @@
                 <section class="question">
                     {{i+1}}. {{info.question}}
                 </section>
-                <section class="answer" *ngFor="let ans of info.answer">
+                <div class="answer" *ngFor="let ans of info.answer">
 
                     <div *ngIf="ans.type === 'text'">
                         {{ans.value.trim()}}
@@ -30,7 +30,7 @@
                     <div *ngIf="ans.type === 'code'">
                         <pre><code [highlight]="ans.value.trim()"></code></pre>
                     </div>
-                </section>
+                </div>
                 <button (click)="deleteInformation(info.id, i)" class="delete" mat-fab color="warn">
                     <mat-icon>remove</mat-icon>
                 </button>

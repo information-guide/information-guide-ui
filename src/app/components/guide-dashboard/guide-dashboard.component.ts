@@ -46,7 +46,7 @@ export class GuideDashboardComponent implements OnInit {
         return r;
       });
     } else {
-      this.showNoContentMsg();
+      this.showNoContentMsg(response.topic.name);
     }
   }
 
@@ -64,7 +64,7 @@ export class GuideDashboardComponent implements OnInit {
         this.actionService.showSpinner(false);
         this.informations.splice(index, 1);
         if (!this.informations.length) {
-          this.showNoContentMsg();
+          this.showNoContentMsg(this.topic.name);
         }
       });
     } else {
@@ -72,8 +72,8 @@ export class GuideDashboardComponent implements OnInit {
     }
   }
 
-  showNoContentMsg() {
-    this.infoMsg = "No content to display!"
+  showNoContentMsg(topicName: any) {
+    this.infoMsg = topicName + ": No content to display!"
     if (this.searchText) {
       this.infoMsg = "Search result not found!"
     }

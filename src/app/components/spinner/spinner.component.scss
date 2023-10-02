@@ -14,7 +14,7 @@
     height: 35px;
     display: block;
     position: absolute;
-    border: 4px dashed #fff;
+    border: 4px dashed #160f0f;
     bottom: 49px;
     transform: rotate(0deg);
     box-sizing: border-box;
@@ -24,12 +24,12 @@
 
 .loader:before {
     right: -14px;
-    box-shadow: 0 0 0 4px #fff, 0 0 0 34px #000, 0 0 5px 34px #0005;
+    box-shadow: 0 0 0 4px #160f0f, 0 0 0 34px #000, 0 0 5px 34px #0005;
 }
 
 .loader:after {
     left: -13px;
-    box-shadow: 0 0 0 4px #fff, 0 0 0 65px #000, 0 0 5px 65px #0005;
+    box-shadow: 0 0 0 4px #160f0f, 0 0 0 65px #000, 0 0 5px 65px #0005;
 }
 
 @keyframes tape {
@@ -48,7 +48,7 @@
     left: 0;
     right: 0;
     position: absolute;
-    background: #263038;
+    // background: #263038;
     z-index: 99999;
     display: flex;
     justify-content: center;
